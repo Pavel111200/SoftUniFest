@@ -5,7 +5,7 @@ namespace Data
     public class Client
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = new Guid();
 
         [Required]
         [MaxLength(100)]
@@ -21,6 +21,8 @@ namespace Data
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
+
+        public string Role { get; set; } = "Client";
 
         public IEnumerable<Product> Products { get; set; } = new List<Product>();
     }

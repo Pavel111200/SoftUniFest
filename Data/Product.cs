@@ -6,7 +6,7 @@ namespace Data
     public class Product
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = new Guid();
 
         [Required]
         [MaxLength(100)]
