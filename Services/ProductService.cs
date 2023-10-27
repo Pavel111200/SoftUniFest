@@ -59,5 +59,24 @@ namespace Services
                 Price = product.Price
             };
         }
+
+        public async Task<ProductDto> EditProduct(Guid productId, EditProductDto model)
+        {
+            Product? product = await _context.Set<Product>().Where(p => p.Id == productId).FirstOrDefaultAsync();
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+
+            await _context.SaveChangesAsync();
+
+            return new ProductDto
+            {
+                Id = product.Id,
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price
+            };
+        }
     }
 }

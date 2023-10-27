@@ -47,5 +47,14 @@ namespace SoftUniFest.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut("{productId}")]
+        [Authorize(Roles = "Company")]
+        public async Task<IActionResult> Edit(Guid productId, EditProductDto model)
+        {
+            var result = await _productService.EditProduct(productId, model);
+
+            return Ok(result);
+        }
     }
 }
