@@ -21,7 +21,7 @@ namespace Data
         public decimal Price { get; set; }
 
         [ForeignKey(nameof(Company))]
-        public Guid UserId { get; set; }
+        public Guid CompanyId { get; set; }
 
         public Company Company { get; set; }
 
