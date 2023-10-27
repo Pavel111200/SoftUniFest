@@ -1,7 +1,7 @@
 ﻿using Data;
 using Data.Dtos.Requests;
+using Data.Dtos.Responses;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Services.Interfaces;
 
 namespace Services
@@ -35,6 +35,14 @@ namespace Services
             }
 
             return true;
+        }
+
+        public async Task<IEnumerable<ProductDto>> GetAllProducts(Guid companyId)
+        {
+            return await _context.Set<Product>()
+                .Where(p => p.CompanyId == companyId)
+                .Select(p => new ProductDto { Id = p.Id, Name = p.Name, Description=p.Description, Price=p.Price})
+                .ToListAsync();  
         }
     }
 }

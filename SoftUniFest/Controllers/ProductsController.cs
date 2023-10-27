@@ -29,5 +29,14 @@ namespace SoftUniFest.Controllers
             }
             return BadRequest("Error occured while creating the product");
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Company")]
+        public async Task<IActionResult> GetAll(Guid companyId)
+        {
+            var result = await _productService.GetAllProducts(companyId);
+
+            return Ok(result);
+        }
     }
 }
