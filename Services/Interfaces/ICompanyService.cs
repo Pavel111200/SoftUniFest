@@ -6,5 +6,7 @@ namespace Services.Interfaces
     public interface ICompanyService
     {
         Task<CompanyDto> Register(RegisterCompanyDto company);
+
+        Task<CompanyDto> Login(LoginCompanyDto company);
     }
 }
