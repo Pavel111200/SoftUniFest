@@ -38,5 +38,14 @@ namespace SoftUniFest.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("{productId}")]
+        [Authorize(Roles = "Company")]
+        public async Task<IActionResult> GetOne(Guid productId)
+        {
+            var result = await _productService.GetProductById(productId);
+
+            return Ok(result);
+        }
     }
 }

@@ -41,8 +41,23 @@ namespace Services
         {
             return await _context.Set<Product>()
                 .Where(p => p.CompanyId == companyId)
-                .Select(p => new ProductDto { Id = p.Id, Name = p.Name, Description=p.Description, Price=p.Price})
-                .ToListAsync();  
+                .Select(p => new ProductDto { Id = p.Id, Name = p.Name, Description = p.Description, Price = p.Price })
+                .ToListAsync();
+        }
+
+        public async Task<ProductDto> GetProductById(Guid productId)
+        {
+            Product? product = await _context.Set<Product>()
+                .Where(p => p.Id == productId)
+                .FirstOrDefaultAsync();
+
+            return new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price
+            };
         }
     }
 }

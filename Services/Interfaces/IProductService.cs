@@ -8,5 +8,7 @@ namespace Services.Interfaces
         Task<bool> AddProduct(Guid companyId, CreateProductDto createProduct);
 
         Task<IEnumerable<ProductDto>> GetAllProducts(Guid companyId);
+
+        Task<ProductDto> GetProductById(Guid productId);
     }
 }
