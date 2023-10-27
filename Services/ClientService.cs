@@ -20,8 +20,30 @@ namespace Services
         {
                 _context = context;
         }
-       
 
+        public async Task<ClientDto> Login(LoginClientDto client)
+        {
+            var clientCompany = await _context.Set<Client>().Where(c => c.Email == client.Email).FirstOrDefaultAsync();
+
+            if (clientCompany == null)
+            {
+                throw new ArgumentException("Company not found");
+            }
+
+            if (!VerifyPassword(client.Password, clientCompany.PasswordHash, clientCompany.PasswordSalt))
+            {
+                throw new ArgumentException("Wrong password");
+            }
+
+            return new ClientDto
+            {
+                Id = clientCompany.Id,
+                FirsName = clientCompany.FirstName,
+                LastName= clientCompany.LastName,
+                Email = clientCompany.Email,
+                Role = clientCompany.Role,
+            };
+        }
         public async Task<ClientDto> Register(RegisterClientDto client)
         {
             Client clientEntity = new Client()
@@ -56,6 +78,14 @@ namespace Services
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
-        }   
+        }
+        private bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return computedHash.SequenceEqual(passwordHash);
+            }
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Services.Interfaces
     public interface IClientService
     {
         Task<ClientDto> Register(RegisterClientDto client);
+        Task<ClientDto> Login(LoginClientDto company);
     }
 }

@@ -40,6 +40,24 @@ namespace SoftUniFest.Controllers
 
             return Ok(result);
         }
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(CompanyDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Login(LoginClientDto client)
+        {
+            ClientDto result = new ClientDto();
+            try
+            {
+                result = await _clientService.Login(client);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            result.AccessToken = CreateToken(result);
+
+            return Ok(result);
+        }
         private string CreateToken(ClientDto client)
         {
             List<Claim> claims = new List<Claim>
