@@ -41,6 +41,25 @@ namespace SoftUniFest.Controllers
             return Ok(result);
         }
 
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(CompanyDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Login(LoginCompanyDto company)
+        {
+            CompanyDto result = new CompanyDto();
+            try
+            {
+                result = await _companyService.Login(company);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            result.AccessToken = CreateToken(result);
+
+            return Ok(result);
+        }
+
 
         private string CreateToken(CompanyDto company)
         {
