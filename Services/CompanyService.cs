@@ -5,6 +5,7 @@ using Data.Dtos.Responses;
 using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 using System.Security.Cryptography;
+using System.Security.Principal;
 
 namespace Services
 {
@@ -14,6 +15,36 @@ namespace Services
         public CompanyService(DbContext context)
         {
             _context = context;
+        }
+
+        public async Task<List<CompanyDto>> GetAllVendors()
+        {
+            var companies= await _context.Set<Company>().ToListAsync();
+            var result=new List<CompanyDto>();
+            foreach (var company in companies)
+            {
+                var companyDto = new CompanyDto()
+                {
+                    Id= company.Id,
+                    Name= company.Name,
+                    Role=company.Role,
+                    Email=company.Email,
+
+                };
+                result.Add(companyDto);
+            }
+            return result;
+        }
+
+        public async Task<List<CompanyDto>> GetByStr(string str)
+        {
+            var companies=await _context.Set<Company>().Where(x=>x.Name.Contains(str)).ToListAsync();
+            var result = new List<CompanyDto>();
+            foreach (var company in companies)
+            {
+                result.Add(new CompanyDto {Id=company.Id, Email=company.Email,Name=company.Name}) ;
+            }
+            return result;
         }
 
         public async Task<CompanyDto> Login(LoginCompanyDto company)
@@ -38,6 +69,7 @@ namespace Services
                 Role = foundCompany.Role,
             };
         }
+        
 
         public async Task<CompanyDto> Register(RegisterCompanyDto company)
         {

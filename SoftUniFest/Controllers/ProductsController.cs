@@ -38,6 +38,7 @@ namespace SoftUniFest.Controllers
 
             return Ok(result);
         }
+      
 
         [HttpGet("{productId}")]
         [Authorize(Roles = "Company")]

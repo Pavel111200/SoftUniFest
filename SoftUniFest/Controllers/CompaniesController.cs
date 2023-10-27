@@ -59,8 +59,21 @@ namespace SoftUniFest.Controllers
 
             return Ok(result);
         }
+        [HttpGet("getAllVendors")]
+        [ProducesResponseType(typeof(CompanyDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllVendor()
+        {
+            var result = await _companyService.GetAllVendors();
+            return Ok(result);
+        }
+        [HttpGet("getByStr")]
+        [ProducesResponseType(typeof(CompanyDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByStr(string str)
+        {
+            var result=await _companyService.GetByStr(str);
+            return Ok(result);
 
-
+        }
         private string CreateToken(CompanyDto company)
         {
             List<Claim> claims = new List<Claim>
