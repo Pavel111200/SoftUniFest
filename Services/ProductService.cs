@@ -3,6 +3,7 @@ using Data.Dtos.Requests;
 using Data.Dtos.Responses;
 using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
+using System.ComponentModel.Design;
 
 namespace Services
 {
@@ -77,6 +78,15 @@ namespace Services
                 Description = model.Description,
                 Price = model.Price
             };
+        }
+
+        public async Task<IEnumerable<ProductDto>> GetAllProducts(string companyName)
+        {
+            return await _context.Set<Product>()
+                .Include("Company")
+                .Where(p => p.Company.Name == companyName)
+                .Select(p => new ProductDto { Id = p.Id, Name = p.Name, Description = p.Description, Price = p.Price })
+                .ToListAsync();
         }
     }
 }

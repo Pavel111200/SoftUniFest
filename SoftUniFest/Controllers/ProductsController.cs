@@ -38,7 +38,15 @@ namespace SoftUniFest.Controllers
 
             return Ok(result);
         }
-      
+
+        [HttpGet("CompanyName")]
+        [Authorize(Roles = "Client")]
+        public async Task<IActionResult> GetByName(string companyName)
+        {
+            var result = await _productService.GetAllProducts(companyName);
+
+            return Ok(result);
+        }
 
         [HttpGet("{productId}")]
         [Authorize(Roles = "Company")]
