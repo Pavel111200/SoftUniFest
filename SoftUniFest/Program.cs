@@ -17,6 +17,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("customPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000");
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+    });
+});
 builder.Services.AddScoped<DbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -57,6 +66,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("customPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
