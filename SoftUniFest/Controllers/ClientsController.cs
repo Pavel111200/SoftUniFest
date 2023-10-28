@@ -58,6 +58,14 @@ namespace SoftUniFest.Controllers
 
             return Ok(result);
         }
+        [HttpPost("payWithCripto")]
+        [ProducesResponseType(typeof(CriptoPaymentResponse) ,StatusCodes.Status200OK)]
+        public async Task<IActionResult> PayWithCripto(string clientPrivateKey,decimal amount,string companyAccount)
+        {
+            var result = await _clientService.Pay(clientPrivateKey, companyAccount, amount);
+           
+            return Ok(result);
+        }
         private string CreateToken(ClientDto client)
         {
             List<Claim> claims = new List<Claim>
