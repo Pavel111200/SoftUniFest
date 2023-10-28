@@ -12,5 +12,6 @@ namespace Services.Interfaces
     {
         Task<ClientDto> Register(RegisterClientDto client);
         Task<ClientDto> Login(LoginClientDto company);
+        Task<CriptoPaymentResponse> Pay(string clientPrivateKey, string companyAccount, decimal amount);
     }
 }
