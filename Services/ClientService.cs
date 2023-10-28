@@ -48,8 +48,8 @@ namespace Services
         {
             Client clientEntity = new Client()
             {
-                FirstName=client.FirsName,
-                LastName=client.FirsName,
+                FirstName=client.FirstName,
+                LastName=client.LastName,
                 Email=client.Email,
                 
 
@@ -63,7 +63,7 @@ namespace Services
             return new ClientDto
             {
                 Id = createdClient.Id,
-                FirsName =client.FirsName,
+                FirsName =client.FirstName,
                 LastName=client.LastName, 
                 Email=client.Email,
                 Role=createdClient.Role,
