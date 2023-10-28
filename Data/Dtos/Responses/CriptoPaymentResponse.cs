@@ -10,5 +10,6 @@ namespace Data.Dtos.Responses
     {
         public string TransactionHash { get; set; }
         public decimal Amount { get; set; }
+        public string Error { get; set; }
     }
 }

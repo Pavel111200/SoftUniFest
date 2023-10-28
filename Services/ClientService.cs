@@ -50,16 +50,22 @@ namespace Services
             };
         }
 
-        public async Task<CriptoPaymentResponse> Pay(string clientPrivateKey,string companyAccount,decimal amount)
+        public async Task<CriptoPaymentResponse> Pay(string clientPrivateKey,string companyAccount,string clientAccount,decimal amount)
         {
             var ethAmount =await CheckConversionRate(amount);
             string testnetUrl = "https://proud-orbital-gas.ethereum-sepolia.quiknode.pro/651ff2ef76bf55dfcabb8dd417d964cf65790261/";
             var account = new Account(clientPrivateKey);
             var web3 = new Web3(account, testnetUrl);
             var toAddress = companyAccount;
+            var balanceWei = await web3.Eth.GetBalance.SendRequestAsync(clientAccount);
+            var balanceEther = Web3.Convert.FromWei(balanceWei);
+            if (balanceEther<ethAmount)
+            {
+                return new CriptoPaymentResponse { Error="This clientAccount doesn't have enought money"};
+            }
             var transactionReceipt = await web3.Eth.GetEtherTransferService()
             .TransferEtherAndWaitForReceiptAsync(toAddress, ethAmount, 2);
-            Console.WriteLine($"Transaction {transactionReceipt.TransactionHash} for amount of 2.11 Ether completed");
+            Console.WriteLine($"Transaction {transactionReceipt.TransactionHash} for amount of {ethAmount} Ether completed");
             return new CriptoPaymentResponse {TransactionHash=transactionReceipt.TransactionHash,Amount=ethAmount };
         }
         private async Task<decimal> CheckConversionRate(decimal amount)
