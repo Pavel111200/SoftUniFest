@@ -24,6 +24,6 @@ namespace Data
 
         public string Role { get; set; } = "Client";
 
-        public IEnumerable<Product> Products { get; set; } = new List<Product>();
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 }

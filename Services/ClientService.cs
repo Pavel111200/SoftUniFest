@@ -25,6 +25,18 @@ namespace Services
                 _context = context;
                 _client =  client;
         }
+        public async Task<string> AddProductToClient(string clientname,string productname)
+        {
+           var result=await _context.Set<Client>().Include(c=>c.Products).Where(x=>x.FirstName== clientname).FirstOrDefaultAsync();
+            var res = await _context.Set<Product>().Where(x => x.Name == productname).FirstOrDefaultAsync();
+            if (!result.Products.Contains(res))
+            {
+                result.Products.Add(res);
+                await _context.SaveChangesAsync();
+                return "ok";
+            }
+            return "fail";
+        }
 
         public async Task<ClientDto> Login(LoginClientDto client)
         {

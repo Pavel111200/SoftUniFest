@@ -68,8 +68,13 @@ namespace SoftUniFest.Controllers
             {
                 return BadRequest(result.Error);
             }
-           
-            return Ok(result);
+
+           var res= await _clientService.AddProductToClient(dto.ClientName,dto.ProductName);
+            if (res=="ok")
+            {
+                return Ok(result);
+            }
+            return BadRequest("you already own it");
         }
         private string CreateToken(ClientDto client)
         {

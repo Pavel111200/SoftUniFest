@@ -12,5 +12,7 @@ namespace Data.Dtos.Requests
         public string Amount { get; set; }
         public string CompanyAccount { get; set; }
         public string ClientAccount { get; set; }
+        public string ClientName { get; set; }
+        public string ProductName { get; set; }
     }
 }
