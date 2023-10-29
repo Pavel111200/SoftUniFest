@@ -70,7 +70,7 @@ namespace SoftUniFest.Controllers
             }
 
            var res= await _clientService.AddProductToClient(dto.ClientName,dto.ProductName);
-            if (res=="ok")
+            if (res)
             {
                 return Ok(result);
             }

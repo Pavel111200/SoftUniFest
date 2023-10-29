@@ -13,6 +13,6 @@ namespace Services.Interfaces
         Task<ClientDto> Register(RegisterClientDto client);
         Task<ClientDto> Login(LoginClientDto company);
         Task<CriptoPaymentResponse> Pay(string clientPrivateKey, string companyAccount,string clientAccount, decimal amount);
-        Task<string> AddProductToClient(string clientname, string productname);
+        Task<bool> AddProductToClient(string clientname, string productname);
     }
 }
